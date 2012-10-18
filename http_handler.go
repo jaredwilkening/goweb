@@ -121,6 +121,14 @@ func ListenAndServe(pattern string) error {
 	return http.ListenAndServe(pattern, DefaultHttpHandler)
 }
 
+func ListenAndServeTLS(pattern string, certFile string, keyFile string) error {
+	return http.ListenAndServeTLS(pattern, certFile, keyFile, DefaultHttpHandler)
+}
+
 func ListenAndServeRoutes(pattern string, r *RouteManager) error {
 	return http.ListenAndServe(pattern, &HttpHandler{routeManager: r})
+}
+
+func ListenAndServeRoutesTLS(pattern string, certFile string, keyFile string, r *RouteManager) error {
+	return http.ListenAndServeTLS(pattern, certFile, keyFile, &HttpHandler{routeManager: r})
 }
