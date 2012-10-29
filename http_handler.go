@@ -14,7 +14,6 @@ type HttpHandler struct {
 
 // Serves the HTTP request and writes the response to the specified writer
 func (handler *HttpHandler) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
-
 	var route *Route
 	var found bool = false
 	var context *Context
@@ -61,8 +60,7 @@ func (h *HttpHandler) GetMathingRoute(responseWriter http.ResponseWriter, reques
 	var route *Route
 	var found bool = false
 	var context *Context
-	for i := 0; i < len(h.routeManager.routes); i++ {
-
+	for i := 0; i < len(h.routeManager.routes); i++ {        
 		route = h.routeManager.routes[i]
 		if route.DoesMatchPath(request.URL.Path) {
 			// extract the parameter values
@@ -75,9 +73,7 @@ func (h *HttpHandler) GetMathingRoute(responseWriter http.ResponseWriter, reques
 				// found matching route
 				found = true
 				break
-
 			}
-
 		}
 
 	}

@@ -112,7 +112,6 @@ func (route *Route) DoesMatchContext(c *Context) bool {
 
 	// by default, we match
 	var match bool = true
-
 	if len(route.MatcherFuncs) > 0 {
 
 		// there are some matcher functions, so don't automatically
@@ -121,7 +120,6 @@ func (route *Route) DoesMatchContext(c *Context) bool {
 
 		// loop through the matcher functions
 		for _, f := range route.MatcherFuncs {
-
 			// modify 'match' based on the result of the matcher function
 			switch f(c) {
 			case NoMatch:

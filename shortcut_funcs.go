@@ -42,6 +42,12 @@ func MapRest(pathPrefix string, controller RestController) {
 
 	var pathPrefixWithId string = pathPrefix + "/{id}"
 
+	// OPTIONS /resource
+	if rc, ok := controller.(RestOptions); ok {
+		MapFunc(pathPrefix, func(c *Context) {
+			rc.Options(c)
+		}, OptionsMethod)
+	}
 	// GET /resource/{id}
 	if rc, ok := controller.(RestReader); ok {
 		MapFunc(pathPrefixWithId, func(c *Context) {

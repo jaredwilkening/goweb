@@ -53,6 +53,12 @@ func (manager *RouteManager) MapRest(pathPrefix string, controller RestControlle
 
 	var pathPrefixWithId string = pathPrefix + "/{id}"
 
+	// OPTIONS /resource
+	if rc, ok := controller.(RestOptions); ok {
+		manager.MapFunc(pathPrefix, func(c *Context) {
+			rc.Options(c)
+		}, OptionsMethod)
+	}
 	// GET /resource/{id}
 	if rc, ok := controller.(RestReader); ok {
 		manager.MapFunc(pathPrefixWithId, func(c *Context) {

@@ -44,6 +44,15 @@ func DeleteMethod(c *Context) RouteMatcherFuncValue {
 }
 
 // Returns Match if the Method of the http.Request in the specified
+// Context is OPTIONS, otherwise returns DontCare
+func OptionsMethod(c *Context) RouteMatcherFuncValue {
+	if c.IsOptions() {
+		return Match
+	}
+	return DontCare
+}
+
+// Returns Match if the Method of the http.Request in the specified
 // Context is POST, otherwise returns DontCare
 func PostMethod(c *Context) RouteMatcherFuncValue {
 	if c.IsPost() {
