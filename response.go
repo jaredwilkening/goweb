@@ -3,6 +3,7 @@ package goweb
 import (
 	"net/http"
 	"strings"
+    "strconv"
 )
 
 // Object holding details about the request and responses
@@ -115,6 +116,9 @@ func (c *Context) WriteResponse(obj interface{}, statusCode int) error {
 		return error
 	}
 
+    // add the content-length
+    c.ResponseWriter.Header().Add("Content-Length", strconv.Itoa(len(output)))
+	
 	// write the status code
 	if strings.Index(c.Request.URL.String(), REQUEST_ALWAYS200_PARAMETER) > -1 {
 
@@ -129,7 +133,7 @@ func (c *Context) WriteResponse(obj interface{}, statusCode int) error {
 
 	}
 
-	// write the output
+	// write the output	
 	c.ResponseWriter.Write(output)
 
 	// success - no errors
