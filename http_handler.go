@@ -60,7 +60,7 @@ func (h *HttpHandler) GetMathingRoute(responseWriter http.ResponseWriter, reques
 	var route *Route
 	var found bool = false
 	var context *Context
-	for i := 0; i < len(h.routeManager.routes); i++ {        
+	for i := 0; i < len(h.routeManager.routes); i++ {
 		route = h.routeManager.routes[i]
 		if route.DoesMatchPath(request.URL.Path) {
 			// extract the parameter values

@@ -4,25 +4,33 @@ import "net/http"
 
 // The standard API response object
 type standardResponse struct {
+	S int         `json:"status"`
+	D interface{} `json:"data"`
+	E []string    `json:"error"`
+}
 
-	// The context of the request that initiated this response
-	//C string
-
-	// The HTTP Status code of this response
-	S int
-
-	// The data (if any) for this response
-	D interface{}
-
-	// A list of any errors that occurred while processing
-	// the response
-	E []string
+// The standard API response object
+type paginatedResponse struct {
+	S      int         `json:"status"`
+	D      interface{} `json:"data"`
+	E      []string    `json:"error"`
+	Limit  int         `json:"limit"`
+	Offset int         `json:"offset"`
+	Count  int         `json:"total_count"`
 }
 
 // Makes a standardResponse object with the specified settings
 func makeStandardResponse() *standardResponse {
 	response := new(standardResponse)
 	//response.C = ""
+	response.S = 200
+	response.E = nil
+	return response
+}
+
+// Makes a standardResponse object with the specified settings
+func makePaginatedResponse() *paginatedResponse {
+	response := new(paginatedResponse)
 	response.S = 200
 	response.E = nil
 	return response

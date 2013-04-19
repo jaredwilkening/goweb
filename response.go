@@ -2,8 +2,8 @@ package goweb
 
 import (
 	"net/http"
+	"strconv"
 	"strings"
-    "strconv"
 )
 
 // Object holding details about the request and responses
@@ -116,9 +116,9 @@ func (c *Context) WriteResponse(obj interface{}, statusCode int) error {
 		return error
 	}
 
-    // add the content-length
-    c.ResponseWriter.Header().Add("Content-Length", strconv.Itoa(len(output)))
-	
+	// add the content-length
+	c.ResponseWriter.Header().Add("Content-Length", strconv.Itoa(len(output)))
+
 	// write the status code
 	if strings.Index(c.Request.URL.String(), REQUEST_ALWAYS200_PARAMETER) > -1 {
 
@@ -165,6 +165,19 @@ func (c *Context) RespondWithErrorMessage(message string, statusCode int) error 
 // Responds with the specified data
 func (c *Context) RespondWithData(data interface{}) error {
 	return c.Respond(data, http.StatusOK, nil, c)
+}
+
+func (c *Context) RespondWithPaginatedData(data interface{}, limit, offset, count int) error {
+	// make the standard response object
+	obj := makePaginatedResponse()
+	obj.E = nil
+	obj.D = data
+	obj.S = http.StatusOK
+	obj.Limit = limit
+	obj.Offset = offset
+	obj.Count = count
+
+	return c.WriteResponse(obj, http.StatusOK)
 }
 
 // Responds with OK status (200) and no data
